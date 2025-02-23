@@ -1,4 +1,3 @@
-use hound;
 use rustfft::{FftPlanner, num_complex::Complex};
 use std::iter::repeat;
 use flutter_rust_bridge::frb;

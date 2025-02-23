@@ -1,16 +1,62 @@
-# test_flutter
+# 💨 OnlyFarts – The Scientific Fart Analyzer
 
-A new Flutter project.
+Because analysing farts is rocket science 🚀 🚀 🚀
 
-## Getting Started
+## 🎺 What is OnlyFarts?
 
-This project is a starting point for a Flutter application.
+Ever wondered how loud your farts are? Do you think your farts have what it take to challenge the world?
 
-A few resources to get you started if this is your first Flutter project:
+OnlyFarts uses Flutter + Rust to analyze and break down your toots into quantifiable data.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠 Tech Behind the Toots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* 💙 Built with Flutter for smooth UI
+* 🦀 Powered by Rust for high-performance fart analysis
+* 🔗 Uses [Flutter Rust Bridge](https://cjycode.com/flutter_rust_bridge/) to seamlessly connect Dart → Rust
+* ⚗️ Uses RMS (Root Mean Square) to calculate loudness and FFT (Fast Fourier Transform) to find the frequency
+
+## 📸 Preview
+
+![preview_1](images/preview_1.png)
+![preview_2](images/preview_2.png)
+
+## 🚀 Getting Started
+
+### 1️⃣ Install Requirements
+Make sure you have Rust (1.85+) and Flutter (3.27+) installed
+
+```
+flutter --version
+rustc --version
+```
+
+
+### 2️⃣ Download dependencies
+
+Run this command to get all the necessary packages:
+
+```
+flutter pub get
+```
+
+### 3️⃣ Run the App
+
+Run an emulator or connect your physical devide and launch
+
+```
+flutter run
+```
+
+### 💥 If something breaks (like your last fart), you might need to recompile the Rust code
+
+Install Flutter Rust Bridge
+
+```
+cargo install flutter_rust_bridge_codegen
+```
+
+Regenerate the Rust binding
+
+```
+flutter_rust_bridge_codegen generate
+```

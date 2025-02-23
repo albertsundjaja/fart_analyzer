@@ -26,6 +26,8 @@ Future<String> getSafeOutputPath(String filename) async {
   return '${dir.path}/$filename';
 }
 
+// TODO: add reference of loudness
+
 class _MyAppState extends State<MyApp> {
   String resultText = "No analysis yet.";
 
@@ -49,12 +51,12 @@ class _MyAppState extends State<MyApp> {
       await File(outputPath).delete(); // Delete existing file before writing
     }
 
-    await FFmpegKit.execute('-i "${file.path}" -ac 1 -ar 44100 -f s16le "$outputPath"');
+    await FFmpegKit.execute('-i "${file.path}" -af "loudnorm=I=-16:TP=-1:LRA=11" -af silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.2:stop_periods=1:stop_threshold=-60dB:stop_silence=0.2 -ac 1 -ar 44100 -f s16le "$outputPath"');
 
     if (await File(outputPath).exists()) {
-      print("✅ PCM file created at: $outputPath");
+      print("PCM file created at: $outputPath");
     } else {
-      print("❌ PCM file missing after FFmpeg conversion.");
+      print("PCM file missing after FFmpeg conversion.");
     }
 
     // Read PCM bytes
@@ -93,7 +95,7 @@ class _MyAppState extends State<MyApp> {
     
 
     if (!await File(outputWavPath).exists()) {
-      print("❌ Failed to create WAV file.");
+      print("Failed to create WAV file.");
       return;
     }
     File outputWav = File(outputWavPath);
@@ -103,7 +105,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       resultText = """
       🎺 Fart Analysis:
-      🔊 Loudness: ${analysis.loudnessDb.toStringAsFixed(2)} dB
+      🔊 Loudness: ${(100 + analysis.loudnessDb).toStringAsFixed(2)} dB
       ⏳ Duration: ${analysis.duration.toStringAsFixed(2)} seconds
       🎶 Dominant Frequency: ${analysis.dominantFreq.toStringAsFixed(2)} Hz
       """;
@@ -112,7 +114,7 @@ class _MyAppState extends State<MyApp> {
 
   }
 
-  /// Extract PCM samples from the audio file
+  /// Extract PCM samples from wav
   // Future<List<double>?> _extractAudioSamples(File file) async {
   //   try {
   //     // Read the file as bytes
@@ -190,5 +192,5 @@ class _MyAppState extends State<MyApp> {
 
 Future<void> playAudio(File file) async {
   final player = AudioPlayer();
-  await player.play(DeviceFileSource(file.path)); // Play the file
+  await player.play(DeviceFileSource(file.path));
 }
